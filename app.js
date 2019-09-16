@@ -105,12 +105,17 @@ let convertToLarger = (x,y) => Math.trunc(x/y);
 let msToTotalSeconds = (m) => convertToLarger(m, 1000);
 let msToTotalMinutes = (m) => convertToLarger(msToTotalSeconds(m), 60);
 let msToTotalHours = (m) => convertToLarger(msToTotalMinutes(m), 60);
+
+let convertToSmaller = (x,y) => x*y;
+let daysToTotalHours = (d) => convertToSmaller(d, 24);
+let daysToTotalMinutes = (d) => convertToSmaller(daysToTotalHours(d), 1440);
+let daysToTotalSeconds = (d) => convertToSmaller(daysToTotalMinutes(d), 86400);
 /**
  * Given a number of milliseconds from midnight, returns the second (0 to 60) for the displayed time
  * @param {number} num the number of milliseconds to convert to seconds
  * @return {number} second for the displayed time (0 to 60)
  */
-let remainingAfterConvert = (x,y) => x%y;
+let remainingAfterConvert = (x,y) => Math.trunc(x%y);
 
 let getSecondFromMs = num => remainingAfterConvert(msToTotalSeconds(num), 60);
 
@@ -118,9 +123,9 @@ let getMinuteFromMs = num => remainingAfterConvert(msToTotalMinutes(num), 60);
 let getHourFromMs = num => remainingAfterConvert(msToTotalHours(num), 60);
   //Hours in Military Time
 
-let getSecondFromDays = num => 0;
-let getMinuteFromDays = num => 0;
-let getHourFromDays   = num => 0;
+let getSecondFromDays  = num => remainingAfterConvert(daysToTotalSeconds(num), 60);
+let getMinuteFromDays = num => remainingAfterConvert(daysToTotalMinutes(num), 60);
+let getHourFromDays = num => remainingAfterConvert(daysToTotalHours(num), 24);
 
 /* END REPLACEMENT FOR ASSIGNMENT 2 */
 
